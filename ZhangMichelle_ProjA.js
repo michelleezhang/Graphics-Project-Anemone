@@ -73,8 +73,7 @@ var g_xMclik=0.0;			// last mouse button-down position (in CVV coords)
 var g_yMclik=0.0;   
 var g_xMdragTot=0.0;	// total (accumulated) mouse-drag amounts (in CVV coords).
 var g_yMdragTot=0.0; 
-var g_digits=5;			// DIAGNOSTICS: # of digits to print in console.log (
-									//    console.log('xVal:', xVal.toFixed(g_digits)); // print 5 digits
+var g_digits=5;			// DIAGNOSTICS: # of digits to print in console.log -- this prints 5 digits
 
 
 function main() {
@@ -99,45 +98,25 @@ function main() {
   }
 
 	// Register the Keyboard & Mouse Event-handlers------------------------------
-	// When users move, click or drag the mouse and when they press a key on the 
-	// keyboard the operating system create a simple text-based 'event' message.
-	// Your Javascript program can respond to 'events' if you:
-	// a) tell JavaScript to 'listen' for each event that should trigger an
-	//   action within your program: call the 'addEventListener()' function, and 
-	// b) write your own 'event-handler' function for each of the user-triggered 
-	//    actions; Javascript's 'event-listener' will call your 'event-handler'
-	//		function each time it 'hears' the triggering event from users.
-	//
   // KEYBOARD:
-  // The 'keyDown' and 'keyUp' events respond to ALL keys on the keyboard,
-  //      including shift,alt,ctrl,arrow, pgUp, pgDn,f1,f2...f12 etc. 
 	window.addEventListener("keydown", myKeyDown, false);
 	// After each 'keydown' event, call the 'myKeyDown()' function.  The 'false' 
 	// arg (default) ensures myKeyDown() call in 'bubbling', not 'capture' stage)
 	window.addEventListener("keyup", myKeyUp, false);
-	// Called when user RELEASES the key.  Now rarely used...
+	// Called when user RELEASES the key. 
 
 	// MOUSE:
 	// Create 'event listeners' for a few vital mouse events 
-	// (others events are available too... google it!).  
 	window.addEventListener("mousedown", myMouseDown); 
-	// (After each 'mousedown' event, browser calls the myMouseDown() fcn.)
   window.addEventListener("mousemove", myMouseMove); 
 	window.addEventListener("mouseup", myMouseUp);	
 	window.addEventListener("click", myMouseClick);				
 	window.addEventListener("dblclick", myMouseDblClick); 
-	// Note that these 'event listeners' will respond to mouse click/drag 
-	// ANYWHERE, as long as you begin in the browser window 'client area'.  
-	// You can also make 'event listeners' that respond ONLY within an HTML-5 
-	// element or division. For example, to 'listen' for 'mouse click' only
-	// within the HTML-5 canvas where we draw our WebGL results, try:
-	// g_canvasID.addEventListener("click", myCanvasClick);
-	// END Keyboard & Mouse Event-Handlers---------------------------------------
 	
   // Specify the color for clearing <canvas>
   gl.clearColor(0.0, 0.5, 0.5, 0.7);
 
-	// NEW!! Enable 3D depth-test when drawing: don't over-draw at any pixel 
+	// Enable 3D depth-test when drawing: don't over-draw at any pixel 
 	// unless the new Z value is closer to the eye than the old one..
 	gl.depthFunc(gl.LESS);
 	gl.enable(gl.DEPTH_TEST); 	  
@@ -165,9 +144,7 @@ function main() {
 function timerAll() {
 //=============================================================================
 // Find new values for all time-varying parameters used for on-screen drawing.
-// HINT: this is ugly, repetive code!  Could you write a better version?
-// 			 would it make sense to create a 'timer' or 'animator' class? Hmmmm...
-//
+
   // use local variables to find the elapsed time:
   var nowMS = Date.now();             // current time (in milliseconds)
   var elapsedMS = nowMS - g_lastMS;   // 
@@ -176,8 +153,7 @@ function timerAll() {
     // Browsers won't re-draw 'canvas' element that isn't visible on-screen 
     // (user chose a different browser tab, etc.); when users make the browser
     // window visible again our resulting 'elapsedMS' value has gotten HUGE.
-    // Instead of allowing a HUGE change in all our time-dependent parameters,
-    // let's pretend that only a nominal 1/30th second passed:
+    // Instead of allowing this HUGE change, let's pretend only a 1/30th second passed
     elapsedMS = 1000.0/30.0;
     }
   g_angle01 = animate(g_angle01);
@@ -187,7 +163,7 @@ function timerAll() {
   g_angle2now += g_angle2rate * g_angle2brake * (elapsedMS * 0.001);
   g_angle3now += g_angle3rate * g_angle3brake * (elapsedMS * 0.001);
   // apply angle limits:  going above max, or below min? reverse direction!
-  // (!CAUTION! if max < min, then these limits do nothing...)
+  // !CAUTION! if max < min, then these limits do nothing...
   if((g_angle0now >= g_angle0max && g_angle0rate > 0) || // going over max, or
   	 (g_angle0now <= g_angle0min && g_angle0rate < 0)  ) // going under min ?
   	 g_angle0rate *= -1;	// YES: reverse direction.
@@ -7427,11 +7403,12 @@ function initVertexBuffer() {
      0.0,  1.0,  0.0, 1.0,  	0.3, 	0.9,	0.5,	// Node 2 0.3, 	0.9,	0.5,
      0.0,	 0.0, -sq2, 1.0,		0.5, 0.5, 0.9,	// Node 4 1.0, 0.5, 0.9,
   ]);
-  g_vertsMax = 7143;	// max number of vertices allowed
-  // teapot base is 7038
-  // hexagon prism is 48
-  // 36 fish wing 
-  // "tetrahedron" is 21
+  g_vertsMax = 7143;	
+  // This is the max number of vertices allowed
+  // Teapot base is 7038
+  // Hexagon prism is 48
+  // Fish "wing" is 36 
+  // "Tetrahedron" is 21
 
   // Create a buffer object
   var shapeBufferHandle = gl.createBuffer(); 
@@ -7619,8 +7596,7 @@ function angleSubmit() {
   // Display what we read from the edit-box: use it to fill up
   // the HTML 'div' element with id='editBoxOut':
     document.getElementById('EditBoxOut').innerHTML ='You Typed: '+UsrTxt;
-    console.log('angleSubmit: UsrTxt:', UsrTxt); // print in console, and
-    //g_angle1now = parseFloat(UsrTxt);     // convert string to float number 
+    console.log('angleSubmit: UsrTxt:', UsrTxt); // print in console
     g_angle0now = parseFloat(UsrTxt); 
     g_angle1now = -1 *  parseFloat(UsrTxt); 
   };
@@ -7728,14 +7704,12 @@ function myMouseDown(ev) {
   var rect = ev.target.getBoundingClientRect();	// get canvas corners in pixels
   var xp = ev.clientX - rect.left;									// x==0 at canvas left edge
   var yp = g_canvas.height - (ev.clientY - rect.top);	// y==0 at canvas bottom edge
-//  console.log('myMouseDown(pixel coords): xp,yp=\t',xp,',\t',yp);
-  
+
 	// Convert to Canonical View Volume (CVV) coordinates too:
   var x = (xp - g_canvas.width/2)  / 		// move origin to center of canvas and
   						 (g_canvas.width/2);			// normalize canvas to -1 <= x < +1,
 	var y = (yp - g_canvas.height/2) /		//										 -1 <= y < +1.
 							 (g_canvas.height/2);
-//	console.log('myMouseDown(CVV coords  ):  x, y=\t',x,',\t',y);
 	
 	g_isDrag = true;											// set our mouse-dragging flag
 	g_xMclik = x;													// record where mouse-dragging began
@@ -7755,14 +7729,12 @@ function myMouseMove(ev) {
   var rect = ev.target.getBoundingClientRect();	// get canvas corners in pixels
   var xp = ev.clientX - rect.left;									// x==0 at canvas left edge
 	var yp = g_canvas.height - (ev.clientY - rect.top);	// y==0 at canvas bottom edge
-//  console.log('myMouseMove(pixel coords): xp,yp=\t',xp,',\t',yp);
   
 	// Convert to Canonical View Volume (CVV) coordinates too:
   var x = (xp - g_canvas.width/2)  / 		// move origin to center of canvas and
   						 (g_canvas.width/2);			// normalize canvas to -1 <= x < +1,
 	var y = (yp - g_canvas.height/2) /		//										 -1 <= y < +1.
 							 (g_canvas.height/2);
-//	console.log('myMouseMove(CVV coords  ):  x, y=\t',x,',\t',y);
 
 	// find how far we dragged the mouse:
 	g_xMdragTot += (x - g_xMclik);					// Accumulate change-in-mouse-position,&
@@ -7786,7 +7758,6 @@ function myMouseUp(ev) {
   var rect = ev.target.getBoundingClientRect();	// get canvas corners in pixels
   var xp = ev.clientX - rect.left;									// x==0 at canvas left edge
 	var yp = g_canvas.height - (ev.clientY - rect.top);	// y==0 at canvas bottom edge
-//  console.log('myMouseUp  (pixel coords): xp,yp=\t',xp,',\t',yp);
   
 	// Convert to Canonical View Volume (CVV) coordinates too:
   var x = (xp - g_canvas.width/2)  / 		// move origin to center of canvas and
@@ -7795,8 +7766,8 @@ function myMouseUp(ev) {
 							 (g_canvas.height/2);
 	console.log('myMouseUp  (CVV coords  ):  x, y=\t',x,',\t',y);
 	
-	g_isDrag = false;											// CLEAR our mouse-dragging flag, and
-	// accumulate any final bit of mouse-dragging we did:
+	g_isDrag = false;											
+  // CLEAR our mouse-dragging flag, and accumulate any final mouse-dragging we did:
 	g_xMdragTot += (x - g_xMclik);
 	g_yMdragTot += (y - g_yMclik);
 	// Report new mouse position:
