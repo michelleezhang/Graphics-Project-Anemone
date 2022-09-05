@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Project A(nemone)</title>
+  </head>
+	<!--	Create the HTML5 'canvas' element in which we will run WebGL  -->
+  <body onload="main()">
+    <canvas id="webgl" width="375" height="375">
+    Please use a browser that supports "canvas"
+    </canvas>
+	<p>
+
+	<div id= Description></div>
+	Behold! An anemone and its clownfish friend.
+	<br />
+	Drag mouse onscreen to change the fish's orientation.
+	Press the "L" key to spin the anemone faster to the left or press the "R" key to spin it faster to the right.
+	<br />
+	Watch the anemone unfurl from a different initial configuration by inputting an initial tentacle rotation angle below.
+	<div id= CurAngleDisplay></div> 
+	New Angle: <input id='usrAngle' size=10> 
+		<button type="button" onClick='angleSubmit()'>Submit</button><BR> 
+		<div id= EditBoxOut></div>
+	</p>
+	Select a component below to pause/unpause the movement of that component.
+	
+	<div id= Select></div> 
+	Select:
+    <input id="base" type="checkbox" value="1" onClick='runStopBase()'>Anemone base
+    <input id="arms" type="checkbox" value="1" onClick='runStopArms()'>Anemone tentacles
+    <input id="fish" type="checkbox" value="1" onClick='runStopFish()'>Fish
+    <br>
+
+		To open the JavaScript Console: <br>
+			</t> (right-click-->'Inspect' or 'Inspect element'-->'Console' tab) <br>
+
+<hr> <!-- Draw a horizontal-line separator------------->
+	User input values:
+		<br>
+		<span id='KeyDownResult'  > KeyDown:    </span> <!-- myKeyDown() modifies this span object -->		
+		<br>
+		<span id='KeyModResult'   > KeyMod :<br><br>   </span> <!-- myKeyDown() modifies this span object -->
+		<br>
+		<span id='MouseAtResult'  >   Mouse At: </span> <!-- myMouseMove() modifies this span object -->
+		<br>
+		<span id='MouseDragResult'> Mouse Drag: </span> <!-- myMouseUp() modifies this span object -->
+
+    <script src="lib/webgl-utils.js"></script>
+    <script src="lib/webgl-debug.js"></script>
+    <script src="lib/cuon-utils.js"></script>
+    <script src="lib/cuon-matrix-quat03.js"></script>
+    <script src="ZhangMichelle_ProjA.js"></script>
+  </body>
+</html>
